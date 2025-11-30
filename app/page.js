@@ -58,7 +58,7 @@ if (!mounted || value === null) {
     setValue(newValue);
   };
 
- const ROW_HEIGHT = 40;
+const ROW_HEIGHT = 40;
 const TIME_COL_WIDTH = 120;
 const VENUE_COL_WIDTH = 180;
 
@@ -140,12 +140,63 @@ const VENUE_COL_WIDTH = 180;
       title: "Product Demo",
       color: "#f3e5f5", 
     },
+
+    {
+      id: 8,
+      date: sevenDaysFromNow[4]?.date,
+      venue: [ "Venue 5","Venue 6"],
+      start: "9:00",
+      end: "10:00",
+      title: "Opera Practice",
+      color: "#f3e5f5", 
+    },
+
+    {
+      id: 9,
+      date: sevenDaysFromNow[5]?.date,
+      venue: [ "Venue 3","Venue 4", "Venue 5"],
+      start: "9:00",
+      end: "10:30",
+      title: "Class Test",
+      color: "#f3e5f5", 
+    },
+
+    {
+      id: 10,
+      date: sevenDaysFromNow[6]?.date,
+      venue: [ "Venue 1","Venue 2",],
+      start: "12:00",
+      end: "13:00",
+      title: "Discussion Event",
+      color: "#f3e5f5", 
+    },
+
+     {
+      id: 11,
+      date: sevenDaysFromNow[3]?.date,
+      venue: [ "Venue 3","Venue 4"],
+      start: "9:00",
+      end: "10:00",
+      title: "Team Event",
+      color: "#f3e5f5", 
+    },
+
+     {
+      id: 12,
+      date: sevenDaysFromNow[3]?.date,
+      venue: [ "Venue 1","Venue 2"],
+      start: "8:00",
+      end: "8:30",
+      title: "Practise Session",
+      color: "#f3e5f5", 
+    },
+
   ];
 
  
   return (
     <div className="flex  min-h-screen i justify-center bg-zinc-50 font-sans dark:bg-black">
-      <Box className="border border-black my-5" sx={{ maxWidth: "60%" }}>
+      <Box className="border border-black my-5" sx={{ maxWidth: "50%" }}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -167,7 +218,7 @@ const VENUE_COL_WIDTH = 180;
 
                   onClick={() => setValue(index)}
                 >
-                  <span>{day?.dayName}</span>
+                  <span style={{ fontSize: "0.75rem",fontWeight: 600,}}>{day?.dayName}</span>
                   <span style={{ fontSize: "0.75rem", opacity: 0.8 }}>
                     Date: {day?.date}
                   </span>
@@ -211,12 +262,8 @@ const VENUE_COL_WIDTH = 180;
             const durationMinutes = endMoment.diff(startMoment, "minutes");
 
             const top = (startDiffMinutes / 15) * ROW_HEIGHT;
-            // Add one extra slot to ensure visual alignment reaches the end time
             const height = ((durationMinutes / 15) + 1) * ROW_HEIGHT;
-            console.log("start:", start, "end:", end);
-            console.log("duration minutes:", durationMinutes);
-            console.log("calculated slots:", durationMinutes / 15);
-            console.log("top:", top, "height:", height);
+        
 
             return { top, height };
           };
@@ -225,11 +272,9 @@ const VENUE_COL_WIDTH = 180;
             const venueList = Array.isArray(eventVenues)
               ? eventVenues
               : [eventVenues];
-            const indices = venueList
-              .map((v) => venues.indexOf(v))
-              .filter((i) => i !== -1);
+            const indices = venueList?.map((v) => venues.indexOf(v))?.filter((i) => i !== -1);
 
-            if (indices.length === 0) return { startIdx: -1, span: 0 };
+            if (indices?.length === 0) return { startIdx: -1, span: 0 };
 
             const minIndex = Math.min(...indices);
             const maxIndex = Math.max(...indices);
@@ -277,7 +322,7 @@ const VENUE_COL_WIDTH = 180;
                   />
 
                  
-                  {venues.map((venue, index) => (
+                  {venues?.map((venue, index) => (
                     <div
                       key={index}
                       style={{
@@ -288,6 +333,7 @@ const VENUE_COL_WIDTH = 180;
                         background: "#fafafa",
                         fontWeight: 600,
                         textAlign: "center",
+                        fontSize: "0.75rem"
                       }}
                     >
                       {venue}
@@ -309,7 +355,7 @@ const VENUE_COL_WIDTH = 180;
                       borderRight: "1px solid rgba(0,0,0,0.08)",
                     }}
                   >
-                    {slots.map((t, i) => (
+                    {slots?.map((t, i) => (
                       <div
                         key={i}
                         style={{
@@ -326,10 +372,10 @@ const VENUE_COL_WIDTH = 180;
                   </div>
 
                 {/* venue and event area */}
-                  {venues.map((venue, vIdx) => {
+                  {venues?.map((venue, vIdx) => {
                    
-                    const startingEvents = events.filter((e) => {
-                      const { startIdx } = getEventSpan(e.venue);
+                    const startingEvents = events?.filter((e) => {
+                      const { startIdx } = getEventSpan(e?.venue);
                       return startIdx === vIdx;
                     });
 
@@ -344,7 +390,7 @@ const VENUE_COL_WIDTH = 180;
                         }}
                       >
                       
-                        {slots.map((t, i) => (
+                        {slots?.map((t, i) => (
                           <div
                             key={i}
                             style={{
@@ -357,7 +403,7 @@ const VENUE_COL_WIDTH = 180;
                         ))}
 
                         
-                        {startingEvents.map((event) => {
+                        {startingEvents?.map((event) => {
                           const { top, height } = getEventStyle(
                             event?.start,
                             event?.end 
