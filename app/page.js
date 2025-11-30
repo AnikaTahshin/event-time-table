@@ -37,12 +37,7 @@ if (!mounted || value === null) {
   );
 }
 
-  
-  // useEffect(() => {
-  //   if (mounted) {
-  //     localStorage.setItem("selectedDay", value.toString());
-  //   }
-  // }, [value, mounted]);
+
  
   const getNextSevenDays = () => {
     let days = [];
@@ -64,8 +59,8 @@ if (!mounted || value === null) {
   };
 
  const ROW_HEIGHT = 40;
-          const TIME_COL_WIDTH = 120;
-          const VENUE_COL_WIDTH = 180;
+const TIME_COL_WIDTH = 120;
+const VENUE_COL_WIDTH = 180;
 
   const venues = [
     "Venue 1",
@@ -172,9 +167,9 @@ if (!mounted || value === null) {
 
                   onClick={() => setValue(index)}
                 >
-                  <span>{day.dayName}</span>
+                  <span>{day?.dayName}</span>
                   <span style={{ fontSize: "0.75rem", opacity: 0.8 }}>
-                    Date: {day.date}
+                    Date: {day?.date}
                   </span>
                 </div>
               }
@@ -188,7 +183,7 @@ if (!mounted || value === null) {
 
           const generateTimeSlots = (
             start = "08:00",
-            end = "23:45",
+            end = "18:00",
             interval = 15
           ) => {
             const slots = [];
@@ -216,7 +211,12 @@ if (!mounted || value === null) {
             const durationMinutes = endMoment.diff(startMoment, "minutes");
 
             const top = (startDiffMinutes / 15) * ROW_HEIGHT;
-            const height = (durationMinutes / 15) * ROW_HEIGHT;
+            // Add one extra slot to ensure visual alignment reaches the end time
+            const height = ((durationMinutes / 15) + 1) * ROW_HEIGHT;
+            console.log("start:", start, "end:", end);
+            console.log("duration minutes:", durationMinutes);
+            console.log("calculated slots:", durationMinutes / 15);
+            console.log("top:", top, "height:", height);
 
             return { top, height };
           };
@@ -378,17 +378,16 @@ if (!mounted || value === null) {
                                 background: event.color,
                                 border: "1px solid rgba(0,0,0,0.1)",
                                 borderRadius: 4,
-                                padding: 4,
-                                boxSizing: "border-box",
+                                padding: "2px 4px",
                                 fontSize: 12,
                                 overflow: "hidden",
                                 zIndex: 10,   
                               }}
                             >
-                              <div style={{ fontWeight: 600 }}>
+                              <div style={{ fontWeight: 600, fontSize: 11 }}>
                                 {event?.title}
                               </div>
-                              <div style={{ fontSize: 10, opacity: 0.8 }}>
+                              <div style={{ fontSize: 9, opacity: 0.8 }}>
                                 {event?.start} - {event?.end}
                               </div>
                             </div>
